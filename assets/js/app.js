@@ -1,4 +1,3 @@
-// @TODO: YOUR CODE HERE!
 var svgWidth = 960;
 var svgHeight = 500;
 
@@ -12,7 +11,6 @@ var margin = {
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-
 var svg = d3.select(".chart")
     .append("svg")
     .attr("width", svgWidth)
@@ -25,7 +23,7 @@ var chartGroup = svg.append("g")
 d3.csv("data.csv").then(function (demoData) {
 
     demoData.forEach(function (data) {
-        data.peverty = +data.poverty;
+        data.poverty = +data.poverty;
         data.age = +data.age;
         data.income = +data.income;
         data.healthcare = +data.healthcare;
@@ -90,7 +88,7 @@ d3.csv("data.csv").then(function (demoData) {
     chartGroup.append("text")
         .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
         .attr("class", "axisText")
-        .text("Hair Metal Band Hair Length (inches)");
+        .text("Demographics");
 }).catch(function (error) {
     console.log(error);
 });
