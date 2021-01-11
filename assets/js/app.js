@@ -10,6 +10,7 @@ var margin = {
 
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
+var buffer = 2
 
 var svg = d3.select(".chart")
     .append("svg")
@@ -20,7 +21,7 @@ var chartGroup = svg.append("g")
     .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 // Import Data
-d3.csv("data.csv").then(function (demoData) {
+d3.csv("assets/data/data.csv").then(function (demoData) {
 
     demoData.forEach(function (data) {
         data.poverty = +data.poverty;
@@ -30,14 +31,13 @@ d3.csv("data.csv").then(function (demoData) {
         data.obesity = +data.obesity;
         data.smokes = +data.smokes;
     });
-    console.log(demoData);
 
     var xLinearScale = d3.scaleLinear()
-        .domain([20, d3.max(demoData, d => d.poverty)])
+        .domain([d3.min(demoData, d => d.poverty - buffer), d3.max(demoData, d => d.poverty + buffer)])
         .range([0, width]);
 
     var yLinearScale = d3.scaleLinear()
-        .domain([0, d3.max(demoData, d => d.healthcare)])
+        .domain([d3.min(demoData, d => d.healthcare - buffer), d3.max(demoData, d => d.healthcare + buffer)])
         .range([height, 0]);
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
@@ -48,6 +48,18 @@ d3.csv("data.csv").then(function (demoData) {
 
     chartGroup.append("g")
         .call(leftAxis);
+
+    var textGroup = chartGroup.selectAll(".abbr")
+        .data(demoData)
+        .enter()
+        .append("text")
+        .classed("abbr", true)
+        .attr("x", d => xLinearScale(d.poverty))
+        .attr("y", d => yLinearScale(d.healthcare)) 
+        .text(d => d.abbr)
+        .attr("dominate-baseline", "middle")
+        .attr("text-anchor", "middle");  
+
 
     var circlesGroup = chartGroup.selectAll("circle")
         .data(demoData)
