@@ -193,7 +193,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
         .attr("y", 30)
         .attr("value", "age")
         .classed("inactive", true)
-        .text("Age (Median");
+        .text("Age (Median)");
 
     var incomeLabel = labelsGroup.append("text")
         .attr("x", 0)
@@ -203,25 +203,28 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
         .text("Household Income (Median)");
 
     var ylabelsGroup = chartGroup.append("g")
-        .attr(rotate(90), "transform", `translate(${width / 2}, ${height + 20})`);
+        .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
     var healthcareLabel = ylabelsGroup.append("text")
-        .attr("x", -60)
-        .attr("y", -210)
+        .attr("transform", "rotate(-90)")
+        .attr("x", 300)
+        .attr("y", -450)
         .attr("value", "healthcare")
         .classed("inactive", true)
         .text("Lacks Healthcare (%)");
 
     var smokeLabel = ylabelsGroup.append("text")
-        .attr("x", -60)
-        .attr("y", -180)
+        .attr("transform", "rotate(-90)")
+        .attr("x", 300)
+        .attr("y", -470)
         .attr("value", "smokes")
         .classed("inactive", true)
         .text("Smokes (%)");
 
     var obeseLabel = ylabelsGroup.append("text")
-        .attr("x", -60)
-        .attr("y", -140)
+        .attr("transform", "rotate(-90)")
+        .attr("x", 300)
+        .attr("y", -490)
         .attr("value", "obese")
         .classed("inactive", true)
         .text("Obesity (%)");
@@ -230,7 +233,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
         .attr("class", "tooltip")
         .offset([80, -60])
         .html(function (d) {
-            return (`${d.state}<br>Poverty: ${d.poverty} % #2 <br>Lack Heathcare: ${d.healthcare} % `);
+            return (`${d.state}<br>Poverty: ${d.poverty} % <br>Lack Heathcare: ${d.healthcare} % `);
         });
 
     chartGroup.call(toolTip1);
@@ -266,24 +269,18 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                     povertyLabel
                         .classed("active", true)
                         .classed("inactive", false);
-                    ageLengthLabel
-                        .classed("active", false)
-                        .classed("inactive", true);
-                }
-                else {
-                    povertyLabel
-                        .classed("active", false)
-                        .classed("inactive", true);
-                    ageLengthLabel
+                } else if (chosenXAxis === "age") {
+                    ageLabel
                         .classed("active", true)
                         .classed("inactive", false);
-
-
-                }
+                } else (chosenXAxis === "income")
+                incomeLabel
+                    .classed("active", true)
+                    .classed("inactive", false);
             }
         });
 
-        ylabelsGroup.selectAll("text")
+    ylabelsGroup.selectAll("text")
         .on("click", function () {
             // get value of selection
             var value = d3.select(this).attr("value");
@@ -307,25 +304,19 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                 // updates tooltips with new info
                 circlesGroup = updateToolTip(chosenYAxis, circlesGroup);
 
-                // changes classes to change bold text
                 if (chosenYAxis === "healthcare") {
                     healthcareLabel
                         .classed("active", true)
                         .classed("inactive", false);
-                    smokeLengthLabel
-                        .classed("active", false)
-                        .classed("inactive", true);
-                }
-                else {
-                    healthcareLabel
-                        .classed("active", false)
-                        .classed("inactive", true);
-                    smokeLengthLabel
+                } else if (chosenYAxis === "smokes") {
+                    smokeLabel
                         .classed("active", true)
                         .classed("inactive", false);
+                } else (chosenYAxis === "obese")
+                obeseLabel
+                    .classed("active", true)
+                    .classed("inactive", false);
 
-
-                }
             }
         });
 
@@ -339,7 +330,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
     //         toolTip.hide(data);
     //     });
     // Create axes labels
-    chartGroup.append("text")
+    yl.append("text")
         .attr("transform", "rotate(-90)")
         .attr("y", 0 - margin.left + 40)
         .attr("x", 0 - (height / 2))
