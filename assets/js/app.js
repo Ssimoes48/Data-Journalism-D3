@@ -1,10 +1,10 @@
 var svgWidth = 960;
-var svgHeight = 500;
+var svgHeight = 600;
 
 var margin = {
     top: 20,
     right: 40,
-    bottom: 60,
+    bottom: 85,
     left: 100
 };
 
@@ -51,7 +51,7 @@ function yScale(demoData, chosenYAxis) {
         .domain([d3.min(demoData, d => d[chosenYAxis] - buffer),
         d3.max(demoData, d => d[chosenYAxis] + buffer)
         ])
-        .range([0, width]);
+        .range([height, 0]);
 
     return yLinearScale;
 }
@@ -98,13 +98,13 @@ function updateToolTip(chosenXAxis, circlesGroup) {
         .attr("class", "tooltip")
         .offset([80, -60])
         .html(function (d) {
-            return (`${d.state}<br>${label} ${d[chosenXAxis]}`);
+            return (`${d.state}<br>${label} ${d[chosenXAxis]} ${d[chosenYAxis]}`);
         });
 
     circlesGroup.call(toolTip);
 
     circlesGroup.on("mouseover", function (data) {
-        toolTip.show(data);
+        toolTip.show(data, this);
     })
         // onmouseout event
         .on("mouseout", function (data, index) {
@@ -135,11 +135,11 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
 
     var yLinearScale = yScale(demoData, chosenYAxis);
 
-    var yLinearScale = d3.scaleLinear()
-        .domain([d3.min(demoData, d => d.healthcare - buffer), d3.max(demoData, d => d.healthcare + buffer)])
-        .range([height, 0]);
-    var bottomAxis = d3.axisBottom(xLinearScale);
-    var leftAxis = d3.axisLeft(yLinearScale);
+    // var yLinearScale = d3.scaleLinear()
+    //     .domain([d3.min(demoData, d => d.healthcare - buffer), d3.max(demoData, d => d.healthcare + buffer)])
+    //     .range([height, 0]);
+    // var bottomAxis = d3.axisBottom(xLinearScale);
+    // var leftAxis = d3.axisLeft(yLinearScale);
 
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
@@ -183,57 +183,57 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
 
     var povertyLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 20)
+        .attr("y", 10)
         .attr("value", "poverty")
         .classed("active", true)
         .text("Poverty (%)");
 
     var ageLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 40)
+        .attr("y", 30)
         .attr("value", "age")
         .classed("inactive", true)
         .text("Age (Median");
 
     var incomeLabel = labelsGroup.append("text")
         .attr("x", 0)
-        .attr("y", 40)
+        .attr("y", 50)
         .attr("value", "income")
         .classed("inactive", true)
         .text("Household Income (Median)");
 
     var ylabelsGroup = chartGroup.append("g")
-        .attr("transform", `translate(${width / 2}, ${height + 20})`);
+        .attr(rotate(90), "transform", `translate(${width / 2}, ${height + 20})`);
 
     var healthcareLabel = ylabelsGroup.append("text")
-        .attr("x", 0)
-        .attr("y", 40)
+        .attr("x", -60)
+        .attr("y", -210)
         .attr("value", "healthcare")
         .classed("inactive", true)
         .text("Lacks Healthcare (%)");
 
     var smokeLabel = ylabelsGroup.append("text")
-        .attr("x", 0)
-        .attr("y", 40)
+        .attr("x", -60)
+        .attr("y", -180)
         .attr("value", "smokes")
         .classed("inactive", true)
-        .text("Smokes (%))");
+        .text("Smokes (%)");
 
     var obeseLabel = ylabelsGroup.append("text")
-        .attr("x", 0)
-        .attr("y", 40)
+        .attr("x", -60)
+        .attr("y", -140)
         .attr("value", "obese")
         .classed("inactive", true)
-        .text("Obesity (%))");
+        .text("Obesity (%)");
 
-    var toolTip = d3.tip()
+    var toolTip1 = d3.tip()
         .attr("class", "tooltip")
         .offset([80, -60])
         .html(function (d) {
-            return (`${d.state}<br>Poverty: ${d.poverty} % <br>Lack Heathcare: ${d.healthcare} % `);
+            return (`${d.state}<br>Poverty: ${d.poverty} % #2 <br>Lack Heathcare: ${d.healthcare} % `);
         });
 
-    chartGroup.call(toolTip);
+    chartGroup.call(toolTip1);
 
     var circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
 
@@ -331,13 +331,13 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
 
     // Step 8: Create event listeners to display and hide the tooltip
     // ==============================
-    circlesGroup.on("click", function (data) {
-        toolTip.show(data, this);
-    })
-        // onmouseout event
-        .on("mouseout", function (data, index) {
-            toolTip.hide(data);
-        });
+    // circlesGroup.on("click", function (data) {
+    //     toolTip.show(data, this);
+    // })
+    //     // onmouseout event
+    //     .on("mouseout", function (data, index) {
+    //         toolTip.hide(data);
+    //     });
     // Create axes labels
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
