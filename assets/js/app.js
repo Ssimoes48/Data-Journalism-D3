@@ -75,12 +75,11 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis) {
     return circlesGroup;
 }
 
-function renderYCircles(circlesGroup, newYScale, chosenYAxis) {
+function renderYCircles(circlesGroup, newYScale, chosenYAxis, textGroup) {
 
     circlesGroup.transition()
         .duration(1000)
         .attr("cy", d => newYScale(d[chosenYAxis]));
-
     return circlesGroup;
 }
 function updateToolTip(chosenXAxis, circlesGroup) {
@@ -129,11 +128,13 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
 
     var xLinearScale = xScale(demoData, chosenXAxis);
 
-    var xLinearScale = d3.scaleLinear()
-        .domain([d3.min(demoData, d => d.poverty - buffer), d3.max(demoData, d => d.poverty + buffer)])
-        .range([0, width]);
+    // var xLinearScale = d3.scaleLinear()
+    //     .domain([d3.min(demoData, d => d.chosenXAxis - buffer), d3.max(demoData, d => d.chosenXAxis + buffer)])
+    //     .range([0, width]);
 
     var yLinearScale = yScale(demoData, chosenYAxis);
+    // .domain([d3.min(demoData, d => d.chosenYAxis - buffer), d3.max(demoData, d => d.chosenYAxis + buffer)])
+    // .range([height, 0]);
 
     // var yLinearScale = d3.scaleLinear()
     //     .domain([d3.min(demoData, d => d.healthcare - buffer), d3.max(demoData, d => d.healthcare + buffer)])
@@ -156,7 +157,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
     chartGroup.append("g")
         .call(leftAxis);
 
-    var circlesGroup = chartGroup.selectAll(".abbr")
+    var textGroup = chartGroup.selectAll(".abbr")
         .data(demoData)
         .enter()
         .append("text")
@@ -259,7 +260,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                 xAxis = renderXAxes(xLinearScale, xAxis);
 
                 // updates circles with new x values
-                circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis);
+                circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, textGroup);
 
                 // updates tooltips with new info
                 circlesGroup = updateToolTip(chosenXAxis, circlesGroup);
@@ -289,16 +290,17 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                         .classed("inactive", true);
                 }
 
-                else if (chosenXAxis === "income")
+                else if (chosenXAxis === "income") {
                     povertyLabel
                         .classed("active", false)
                         .classed("inactive", true);
-                ageLabel
-                    .classed("active", false)
-                    .classed("inactive", true);
-                incomeLabel
-                    .classed("active", true)
-                    .classed("inactive", false);
+                    ageLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    incomeLabel
+                        .classed("active", true)
+                        .classed("inactive", false);
+                }
             }
         });
 
@@ -319,7 +321,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                 // yAxis = renderYAxes(yLinearScale, yAxis);
 
                 // updates circles with new x values
-                circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis);
+                circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis, textGroup);
 
                 // updates tooltips with new info
                 circlesGroup = updateToolTip(chosenYAxis, circlesGroup);
@@ -348,17 +350,18 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                         .classed("inactive", true);
                 }
 
-                else if (chosenYAxis === "obesity")
+                else if (chosenYAxis === "obesity") {
                     obeseLabel
                         .classed("active", true)
                         .classed("inactive", false);
-                smokeLabel
-                    .classed("active", false)
-                    .classed("inactive", true);
-                healthcareLabel
-                    .classed("active", false)
-                    .classed("inactive", true);
+                    smokeLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
+                    healthcareLabel
+                        .classed("active", false)
+                        .classed("inactive", true);
 
+                }
             }
         });
 
