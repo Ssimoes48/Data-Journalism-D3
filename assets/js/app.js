@@ -23,15 +23,13 @@ var chartGroup = svg.append("g")
     // Import Data
 d3.csv("assets/data/data.csv").then(function(demoData) {
 
-    // Step 1: Parse Data/Cast as numbers
-    // ==============================
+    // Parse Data/Cast as numbers
     demoData.forEach(function(data) {
       data.poverty = +data.poverty;
       data.healthcare = +data.healthcare;
     });
 
-    // Step 2: Create scale functions
-    // ==============================
+    // Create scale functions
     var xLinearScale = d3.scaleLinear()
         .domain([d3.min(demoData, d => d.poverty - buffer),
         d3.max(demoData, d => d.poverty + buffer)
@@ -45,13 +43,11 @@ d3.csv("assets/data/data.csv").then(function(demoData) {
         ])
         .range([height, 0]);
 
-    // Step 3: Create axis functions
-    // ==============================
+    // Create axis functions
     var bottomAxis = d3.axisBottom(xLinearScale);
     var leftAxis = d3.axisLeft(yLinearScale);
 
-    // Step 4: Append Axes to the chart
-    // ==============================
+    // Append Axes to the chart
     chartGroup.append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(bottomAxis);
@@ -59,8 +55,7 @@ d3.csv("assets/data/data.csv").then(function(demoData) {
     chartGroup.append("g")
       .call(leftAxis);
 
-    // Step 5: Create Circles
-    // ==============================
+    // Create Circle Text
     var textGroup = chartGroup.selectAll("abbr")
     .data(demoData)
     .enter()
@@ -72,7 +67,7 @@ d3.csv("assets/data/data.csv").then(function(demoData) {
     .attr("dominate-baseline", "middle")
     .attr("text-anchor", "middle");
 
-
+    // Create Circles
     var circlesGroup = chartGroup.selectAll("circle")
     .data(demoData)
     .enter()
@@ -83,8 +78,7 @@ d3.csv("assets/data/data.csv").then(function(demoData) {
     .attr("fill", "pink")
     .attr("opacity", ".5");
 
-    // Step 6: Initialize tool tip
-    // ==============================
+    // Initialize tool tip
     var toolTip = d3.tip()
       .attr("class", "tooltip")
       .offset([80, -60])
@@ -92,12 +86,10 @@ d3.csv("assets/data/data.csv").then(function(demoData) {
         return (`${d.state}<br>Poverty: ${d.poverty} % <br> Healthcare ${d.healthcare} %`);
       });
 
-    // Step 7: Create tooltip in the chart
-    // ==============================
+    // Create tooltip in the chart
     chartGroup.call(toolTip);
 
-    // Step 8: Create event listeners to display and hide the tooltip
-    // ==============================
+    // Create event listeners to display and hide the tooltip
     circlesGroup.on("click", function(data) {
       toolTip.show(data, this);
     })
