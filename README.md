@@ -47,7 +47,7 @@ The ` textGroup` displays the state abbreviation over the point. I centered the 
 
 ![text circle](Images/text_circle.PNG)
 
-To create the `click` function to display all of points data, I `toolTip` and associated with the `click` . 
+To create the `click` function that display all data values, I  used a `toolTip` and associated with the `click` event. 
 
 ![tool tip](Images/tool_tip.PNG)
 
@@ -62,6 +62,8 @@ Lastly, I created the data for the X and Y axis. For the Y axis, I specified tha
 The final chart is a scatter plot that shows the relation ship between poverty levels and lack of healthcare per state. As you can see from the visualization, states with lower poverty rates have lower percentages of people who lack healthcare. 
 
 ![final chart](Images/reg_chart.PNG)
+
+`toolTip` data value display for Texas:
 
 ![texas](Images/tool_tip_texas.PNG)
 
