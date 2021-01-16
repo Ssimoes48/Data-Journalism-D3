@@ -59,7 +59,7 @@ Lastly, I created the data for the X and Y axis. For the Y axis, I specified tha
 
 ## Final Chart
 
-The final chart is a scatter plot that shows the relation ship between poverty levels and lack of healthcare per state. As you can see from the visualization, states with lower poverty rates have lower percentages of people who lack healthcare. 
+The final chart is a scatter plot that shows the relationship between poverty levels and lack of healthcare per state. As you can see from the visualization, states with lower poverty rates have lower percentages of people who lack healthcare. 
 
 ![final chart](Images/reg_chart.PNG)
 
