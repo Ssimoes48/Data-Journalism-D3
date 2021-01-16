@@ -71,6 +71,10 @@ function renderCircles(circlesGroup, newXScale, chosenXAxis, textGroup) {
     circlesGroup.transition()
         .duration(1000)
         .attr("cx", d => newXScale(d[chosenXAxis]));
+        textGroup.transition()
+        .duration(1000)
+        .attr("x", d => yLinearScale(d[chosenXAxis]))
+        .attr("cx", d => newYScale(d[chosenXAxis]));
     return circlesGroup;
 }
 
@@ -81,7 +85,7 @@ function renderYCircles(circlesGroup, newYScale, chosenYAxis, textGroup, yLinear
         .attr("cy", d => newYScale(d[chosenYAxis]));
     textGroup.transition()
         .duration(1000)
-        .attr("y", d => yLinearScale(d[chosenYAxis]))
+        // .attr("y", d => yLinearScale(d[chosenYAxis]))
         .attr("cy", d => newYScale(d[chosenYAxis]));
     return circlesGroup;
 }
