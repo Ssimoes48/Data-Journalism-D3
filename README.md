@@ -25,15 +25,15 @@ The visualizations are created in `Javascript` and use `D3` code.
 
 ## D3 Visualization 
 
-To create my visualization, I first created the `svg`  shape to put my chart in. Then, I used `d3` to import my csv data file. 
+To create my visualization, first I created the `svg`  shape to put my chart in. Then, I used `d3` to import my csv data file. 
 
 ![import](Images/import.PNG)
 
-I then parsed my data using `.forEach` 
+Then I parsed my data using `.forEach` 
 
 ![parse](Images/parse_data.PNG)
 
-Next, I created the scale functions and axis. To create a balanced visualization, I used a buffer variable when creating my X and Y axis, so the date is displayed nicely. 
+Next, I created the scale functions and axis. To create a balanced visualization, I used a buffer variable when creating my X and Y axis, so the date is displayed clearly. 
 
 ![scale](Images/scale_functions.PNG)
 
@@ -47,7 +47,7 @@ The ` textGroup` displays the state abbreviation over the point. I centered the 
 
 ![text circle](Images/text_circle.PNG)
 
-To create the `click` function that display all data values, I  used a `toolTip` and associated with the `click` event. 
+To create the `click` function that displays all data values, I used a `toolTip` and associated with the `click` event. 
 
 ![tool tip](Images/tool_tip.PNG)
 

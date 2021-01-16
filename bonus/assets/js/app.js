@@ -85,22 +85,38 @@ function renderYCircles(circlesGroup, newYScale, chosenYAxis, textGroup, yLinear
         .attr("cy", d => newYScale(d[chosenYAxis]));
     return circlesGroup;
 }
-function updateToolTip(chosenXAxis, circlesGroup) {
+
+function updateToolTip(chosenXAxis, chosenYAxis, circlesGroup) {
 
     var label;
 
     if (chosenXAxis === "poverty") {
         label = "Poverty:";
     }
-    else {
+    else if (chosenXAxis === "age") {
         label = "Age:";
+    }
+    else { label = "Income"
+
+    };
+
+    var labelY;
+
+    if (chosenYAxis === "healthcare") {
+        labelY = "Healthcare:";
+    }
+    else if (chosenYAxis === "smokes") {
+        labelY = "Smokes:";
+    }
+    else { labelY = "Obesity"
+
     };
 
     var toolTip = d3.tip()
         .attr("class", "tooltip")
         .offset([80, -60])
         .html(function (d) {
-            return (`${d.state}<br> ${d[chosenXAxis]}  <br> ${d[chosenYAxis]} `);
+            return (`${d.state}<br> ${label} ${d[chosenXAxis]}  <br> ${labelY} ${d[chosenYAxis]} `);
         });
 
     circlesGroup.call(toolTip);
@@ -234,16 +250,16 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
         .classed("inactive", true)
         .text("Obesity (%)");
 
-    var toolTip1 = d3.tip()
-        .attr("class", "tooltip")
-        .offset([80, -60])
-        .html(function (d) {
-            return (`${d.state}<br>Poverty: ${d.poverty} % <br>Lack Heathcare: ${d.healthcare} % `);
-        });
+    // var toolTip1 = d3.tip()
+    //     .attr("class", "tooltip")
+    //     .offset([80, -60])
+    //     .html(function (d) {
+    //         return (`${d.state}<br>Poverty: ${d.poverty} % <br>Lack Heathcare: ${d.healthcare} % `);
+    //     });
 
-    chartGroup.call(toolTip1);
+    // chartGroup.call(toolTip1);
 
-    var circlesGroup = updateToolTip(chosenXAxis, circlesGroup, chosenYAxis, textGroup);
+    var circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup,  textGroup);
 
     labelsGroup.selectAll("text")
         .on("click", function () {
@@ -267,7 +283,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                 circlesGroup = renderCircles(circlesGroup, xLinearScale, chosenXAxis, textGroup);
 
                 // updates tooltips with new info
-                circlesGroup = updateToolTip(chosenXAxis, circlesGroup, textGroup);
+                circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
 
                 // changes classes to change bold text
                 if (chosenXAxis === "poverty") {
@@ -328,7 +344,7 @@ d3.csv("assets/data/data.csv").then(function (demoData, err) {
                 circlesGroup = renderYCircles(circlesGroup, yLinearScale, chosenYAxis, textGroup);
 
                 // updates tooltips with new info
-                circlesGroup = updateToolTip(chosenYAxis, circlesGroup, textGroup);
+                circlesGroup = updateToolTip(chosenXAxis, chosenYAxis, circlesGroup, textGroup);
 
                 if (chosenYAxis === "healthcare") {
                     healthcareLabel
