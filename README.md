@@ -71,7 +71,7 @@ The final chart is a scatter plot that shows the relationship between poverty le
 
 [Bonus Code](https://github.com/Ssimoes48/Data-Journalism-D3/tree/main/bonus)
 
-I spent a long time working on a more complex visualization that compared 6 different health risk factors. I was unable to get the data points to move correctly when switching between datasets, so I did not submit it as my final assignment. Pleases see above link to repo with bonus code and index.html. 
+I spent a long time working on a more complex visualization that compared six different health risk factors. I was unable to get the data points to move correctly when switching between datasets, so I did not submit it as my final assignment. Pleases see above link to repo with bonus code and index.html. 
 
 ![bonus](Images/bonus_chart.PNG)
 
