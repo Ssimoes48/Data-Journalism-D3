@@ -7,7 +7,6 @@
 * [Technologies](#technologies)
 * [D3 Visualization ](#d3-visualization)
 * [Final Chart](#final-chart)
-* [Bonus](#bonus)
 * [Resources](#resources)
 * [Contact](#contact)
 
@@ -66,18 +65,6 @@ The final chart is a scatter plot that shows the relationship between poverty le
 `toolTip` data value display for Texas:
 
 ![texas](Images/tool_tip_texas.PNG)
-
-## Bonus
-
-[Bonus Code](https://github.com/Ssimoes48/Data-Journalism-D3/tree/main/bonus)
-
-I spent a long time working on a more complex visualization that compared six different health risk factors. I was unable to get the data points to move correctly when switching between datasets, so I did not submit it as my final assignment. Pleases see above link to repo with bonus code and index.html. 
-
-![bonus](Images/bonus_chart.PNG)
-
-When you select a new axis, the title becomes bold. The data points move and display the correct data when you click on the circle, but I was not able to get my state abbreviations to move with the transition. I am going to keep trying to solve this and will eventually update this repo with the more advanced visualization. 
-
-![bad](Images/bad_bonus.PNG)
 
 ## Resources
 
